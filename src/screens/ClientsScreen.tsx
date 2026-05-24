@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, View,} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import api from '../api/api';
 
 export default function ClientsScreen() {
@@ -8,6 +9,7 @@ export default function ClientsScreen() {
     const [clients, setClients] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const navigation = useNavigation();
 
     useEffect(() => {
 
@@ -16,35 +18,33 @@ export default function ClientsScreen() {
     }, []);
 
     const getClients = async () => {
-    
+
         try {
-        
+
             const token = await AsyncStorage.getItem(
                 'token'
             );
-        
+
             console.log('TOKEN:', token);
-        
+
             const response = await api.get(
                 '/clients'
             );
         
-            console.log(response.data);
-        
             setClients(
                 response.data.data
             );
-        
+
         } catch(error: any) {
-        
+
             console.log(
                 error.response?.data
             );
-        
+
         } finally {
-        
+
             setLoading(false);
-        
+
             setRefreshing(false);
         }
     };
@@ -118,8 +118,17 @@ export default function ClientsScreen() {
                             borderRadius: 10,
                             marginBottom: 10,
                         }}
+                        onPress={() =>
+                            navigation.navigate(
+                                'ClientDetail' as never,
+                                {
+                                    id_client: item.id_client,
+                                    client_name:
+                                        `${item.client_firstname} ${item.client_lastname1}`,
+                                } as never
+                            )
+                        }
                     >
-
                         <Text
                             style={{
                                 fontSize: 18,
