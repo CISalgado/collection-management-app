@@ -6,58 +6,41 @@ import api from '../api/api';
 export default function ClientDetailScreen() {
 
     const route = useRoute<any>();
-
     const {
         id_client,
         client_name,
     } = route.params;
-
     const [loading, setLoading] = useState(true);
-
     const [movements, setMovements] = useState<any[]>([]);
-
     const [balance, setBalance] = useState(0);
 
     useEffect(() => {
-
         getAccountStatement();
-
     }, []);
 
     const getAccountStatement = async () => {
-
         try {
-
             const response = await api.get(
-                `/clients/${id_client}/account-statementaccount-statement`
+                `/clients/${id_client}/account-statement`
             );
-
             console.log(response.data);
-
             setMovements(
                 response.data.data.movements
             );
-
             setBalance(
                 response.data.data.balance
             );
-
         } catch(error: any) {
-
             console.log(
                 error.response?.data
             );
-
         } finally {
-
             setLoading(false);
         }
     };
 
     if(loading) {
-
         return (
-
             <View
                 style={{
                     flex: 1,
@@ -71,7 +54,6 @@ export default function ClientDetailScreen() {
     }
 
     return (
-
         <View
             style={{
                 flex: 1,
@@ -79,7 +61,6 @@ export default function ClientDetailScreen() {
                 padding: 20,
             }}
         >
-
             <Text
                 style={{
                     fontSize: 26,
@@ -107,7 +88,6 @@ export default function ClientDetailScreen() {
                     index.toString()
                 }
                 renderItem={({ item }) => (
-
                     <View
                         style={{
                             backgroundColor: '#f2f2f2',
@@ -116,7 +96,6 @@ export default function ClientDetailScreen() {
                             marginBottom: 10,
                         }}
                     >
-
                         <Text
                             style={{
                                 fontWeight: 'bold',
@@ -137,11 +116,9 @@ export default function ClientDetailScreen() {
                         <Text>
                             {item.fecha}
                         </Text>
-
                     </View>
                 )}
             />
-
         </View>
     );
 }

@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import SplashScreen from '../screens/SplashScreen';
 import ClientsScreen from '../screens/ClientsScreen';
 import ClientDetailScreen from '../screens/ClientDetailScreen';
+import CreateClientScreen from '../screens/CreateClientScreen';
 // import DebtsScreen from '../screens/DebtsScreen';
 // import PaymentsScreen from '../screens/PaymentsScreen';
 
@@ -69,6 +70,14 @@ export default function AppNavigator() {
                     component={ClientDetailScreen}
                     options={{
                         title: 'Estado de cuenta',
+                    }}
+                />
+
+                <Stack.Screen
+                    name="CreateClient"
+                    component={CreateClientScreen}
+                    options={{
+                        title: 'Nuevo cliente',
                     }}
                 />
 
